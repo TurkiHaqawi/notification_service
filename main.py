@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import threading
-from src.services.notification_consumer import process_notification
+from services.notification_consumer import consume_notification
 
 app = FastAPI()
 
@@ -9,7 +9,7 @@ def health_check():
     return {"message": "Notification Service is running"}
 
 def start_kafka_consumer():
-    thread = threading.Thread(target=process_notification, daemon=True)
+    thread = threading.Thread(target=consume_notification, daemon=True)
     thread.start()
 
 if __name__ == "__main__":

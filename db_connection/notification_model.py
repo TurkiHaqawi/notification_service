@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, JSON, Text, TIMESTAMP, Enum
 from sqlalchemy.dialects.postgresql import UUID
-from src.db_connection.database import Base
+from db_connection.database import Base
 
 class Notification(Base):
     __tablename__ = "notifications"

@@ -1,7 +1,8 @@
 from confluent_kafka import Consumer
 from sqlalchemy.orm import Session
-from src.db_connection.database import get_db
-from src.db_connection.notification_model import Notification
+from db_connection.database import get_db
+from db_connection.notification_model import Notification
+from services.notification_service import NotificationService
 from sqlalchemy.orm import Session
 import json
 import os
@@ -24,7 +25,7 @@ config = {
 consumer = Consumer(config)
 consumer.subscribe(["notifications_topic"])
 
-def process_notification():
+def consume_notification():
     db: Session = next(get_db())
 
 
@@ -34,9 +35,18 @@ def process_notification():
         if msg is None:
             continue
         if msg.error():
-            print(f"Consumer error: {msg.error()}")
             continue
 
         notification_data = json.loads(msg.value().decode("utf-8"))
-        print(notification_data)
+        notification_id = notification_data["notificationId"]
+
+        # Check if notification already exists (Idempotency Check)
+        existing_notification = db.query(Notification).filter_by(notification_id=notification_id).first()
+        if existing_notification:
+            consumer.commit()
+            continue
+
+        processed_notification = NotificationService()
+        processed_notification.send_notification(notification_data)
         
+        consumer.commit()
