@@ -30,7 +30,7 @@ class NotificationService:
         self.db.commit()
 
     def send_notification(self, notification):
-        """ Fetches template, formats message, and sends notification. """
+        """ Fetches template, formats message, and sends notification, Store in DB """
         # Fetch the template
         template = self.get_notification_template(notification.notification_template)
         if not template:

@@ -38,7 +38,7 @@ def consume_notification():
             continue
 
         notification_data = json.loads(msg.value().decode("utf-8"))
-        notification_id = notification_data["notificationId"]
+        notification_id = notification_data["notification_id"]
 
         # Check if notification already exists (Idempotency Check)
         existing_notification = db.query(Notification).filter_by(notification_id=notification_id).first()
