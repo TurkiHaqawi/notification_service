@@ -1,12 +1,12 @@
-# This workflow will install Python dependencies and run tests for every pull request to main/master
-name: Test on PR
+# This workflow will run on push to main/master, run tests, and build the Docker image
+name: Build Docker Image on Merge
 
 on:
-  pull_request:
+  push:
     branches: [ main, master ]
 
 jobs:
-  test:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,3 +25,7 @@ jobs:
       - name: Run tests
         run: |
           if [ -d "tests" ]; then pytest tests; else echo "No tests directory found."; fi
+
+      - name: Build Docker image
+        run: |
+          docker build -t notification_service .
