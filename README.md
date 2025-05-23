@@ -27,7 +27,7 @@ A robust, extensible microservice for handling notifications via Email, SMS, and
 
 ### 1. Clone the repository
 ```sh
-git clone <your-repo-url>
+git clone https://github.com/TurkiHaqawi/notification_service.git
 cd notification_service
 ```
 
