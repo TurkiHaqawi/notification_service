@@ -1,5 +1,7 @@
 # Notification Service
 
+![System Architecture](Notification Service Design.png)
+
 A robust, extensible microservice for handling notifications via Email, SMS, and Push channels. This service supports idempotency, dynamic notification templates, provider failover, and OTP (One-Time Password) handling.
 
 ## Features
