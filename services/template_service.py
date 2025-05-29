@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from db_connection.database import get_db
 from db_connection.notification_model import NotificationTemplate
-from db_connection.response_serialization import UpdateTemplate
+from models.template_models import UpdateTemplate
 
 
 def handle_getting_all_templates(notification_type: str = None):
